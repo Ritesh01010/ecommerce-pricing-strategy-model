@@ -1,182 +1,249 @@
-# ecommerce-pricing-strategy-model
-Multi-factor pricing optimization framework using cost, demand, inventory &amp; competitor signals
-📊 Multi-Factor Pricing Optimization Framework
-E-Commerce Catalog Strategy Case Study
-👤 Author
+# 📊 Multi-Factor Pricing Optimization Framework  
+## E-Commerce Catalog Strategy Case Study  
 
-Ritesh Yadav
-Data Analyst | Business & Pricing Strategy
+---
 
-GitHub: https://github.com/Ritesh01010
+## 👤 Author
 
-LinkedIn: https://www.linkedin.com/in/ritesh-yadav-406331240
+**Ritesh Yadav**  
+Data Analyst | Business & Pricing Strategy  
 
-📌 Project Overview
+- GitHub: https://github.com/Ritesh01010  
+- LinkedIn: https://www.linkedin.com/in/ritesh-yadav-406331240  
 
-This project presents a structured, data-driven pricing optimization framework designed for an e-commerce catalog containing multiple SKUs with varying:
+---
 
-Cost structures
+# 1. Executive Summary
 
-Demand patterns
+This project presents a structured pricing optimization framework for an e-commerce catalog containing multiple SKUs with varying cost structures, demand patterns, inventory levels, and competitive pressures.
 
-Inventory positions
+The objective was to design a scalable, data-driven pricing system that:
 
-Competitive pressures
+- Protects profitability  
+- Responds to demand signals  
+- Adjusts for inventory risk  
+- Aligns with competitive market conditions  
 
-The objective was to build a scalable pricing engine that moves beyond reactive decision-making and establishes systematic pricing governance across the catalog.
+Instead of reactive pricing, a rule-based analytical framework was implemented to generate SKU-level recommended prices while maintaining margin discipline.
 
-The framework integrates financial discipline with operational intelligence to generate SKU-level recommended prices while maintaining profitability protection.
+---
 
-🎯 Business Objectives
+# 2. Business Problem
 
-The pricing model was designed to:
+The catalog exhibited inconsistent pricing decisions due to:
 
-Protect gross margins
+- Rapid stock-outs in high-demand SKUs  
+- Overstock accumulation in slow-moving products  
+- Misalignment with competitor price bands  
+- Margin erosion in high-competition segments  
 
-Respond to real customer demand signals
+The company required a repeatable pricing logic that balances:
 
-Adjust pricing based on inventory risk
+- Growth  
+- Profitability  
+- Operational stability  
 
-Align with competitive market conditions
+---
 
-Standardize pricing logic across SKUs
+# 3. Data Sources & Signals Used
 
-🧠 Pricing Framework Architecture
+The pricing model integrates multiple business signals.
 
-The pricing engine follows a structured multi-step methodology:
+## 3.1 Cost Structure
 
-1️⃣ Profitability Floor
+- Product Cost  
+- FBA Fee  
+- Storage Fee  
+- Handling Cost  
+- Minimum Acceptable Margin %  
+- Target Gross Margin %  
 
-Establish a minimum viable price to ensure no SKU is sold at a loss.
+---
 
-Total Unit Cost =
-Product Cost + FBA Fee + Storage Fee + Handling Cost
+## 3.2 Demand Metrics
 
-Minimum Price =
-Total Unit Cost / (1 − Minimum Margin %)
+- Sessions  
+- Units Ordered  
+- Conversion Rate
 
-2️⃣ Target Margin Pricing
+**Conversion Rate Formula:**
+- Conversion Rate = Units Ordered / Sessions
 
-Target Price =
-Total Unit Cost / (1 − Target Margin %)
+Demand classification:
 
-This defines the strategic profitability objective.
+- STRONG → Above-average conversion rate  
+- WEAK → Below-average conversion rate  
 
-3️⃣ Inventory-Based Adjustment
+---
 
-LOW_STOCK (< 30 days) → +10% price increase
+## 3.3 Inventory Health
 
-OVERSTOCK (> 90 days) → −10% price decrease
+- Days of Supply  
+- Sell-through metrics  
 
-HEALTHY (30–90 days) → No change
+Inventory classification:
 
-Purpose: Manage capital efficiency and stock pressure.
+- LOW_STOCK → Days of Supply < 30  
+- HEALTHY → 30–90  
+- OVERSTOCK → > 90  
 
-4️⃣ Demand-Based Adjustment
+---
 
-Demand classification based on conversion rate:
+## 3.4 Competitive Positioning
 
-Conversion Rate = Units Ordered / Sessions
+- Average Competitor Price  
+- Lowest Competitor Price  
+- Highest Competitor Price  
+- Competitor Count  
 
-STRONG demand → +5% price increase
+These define the market pricing envelope.
 
-WEAK demand → −5% price decrease
+---
+
+# 4. Pricing Framework Logic
+
+The pricing engine follows a structured sequence.
+
+---
+
+## 4.1 Step 1: Profitability Floor
+
+**Total Unit Cost =**
+- Product Cost + FBA Fee + Storage Fee + Handling Cost
+
+**Minimum Price =**
+Total Unit Cost / (1 − Minimum Margin)
+
+This ensures no SKU is sold below profitability threshold.
+
+---
+
+## 4.2 Step 2: Target Margin Price
+
+Target Price = Total Unit Cost / (1 − Target Margin)
+
+
+Establishes the strategic profitability objective.
+
+---
+
+## 4.3 Step 3: Inventory-Based Adjustment
+
+- LOW_STOCK → Increase price by 10%  
+- OVERSTOCK → Decrease price by 10%  
+- HEALTHY → No adjustment  
+
+Purpose: Balance stock pressure and capital efficiency.
+
+---
+
+## 4.4 Step 4: Demand-Based Adjustment
+
+- STRONG demand → Increase price by 5%  
+- WEAK demand → Reduce price by 5%  
 
 Purpose: Capture willingness to pay while supporting slow-moving SKUs.
 
-5️⃣ Competitive Alignment
+---
 
-Pricing is repositioned within competitive guardrails:
+## 4.5 Step 5: Competitive Alignment
 
-If price > 110% of lowest competitor → adjust to 105%
+If adjusted price:
 
-If price < 90% of average competitor → adjust to 95%
+- Exceeds 110% of lowest competitor → Reposition to 105%  
+- Falls below 90% of average competitor → Reposition to 95%  
+- Otherwise → Maintain adjusted price  
 
-Otherwise → maintain adjusted price
+Purpose: Avoid price wars while staying market-relevant.
 
-Purpose: Maintain competitiveness without engaging in price wars.
+---
 
-6️⃣ Final Margin Protection Rule
+## 4.6 Step 6: Margin Protection Rule
+
 Final Recommended Price = MAX(Competition_Adjusted_Price, Minimum_Price)
 
+Guarantees profitability protection across all SKUs.
 
-This guarantees profitability discipline across all SKUs.
+---
 
-📊 Key Business Signals Used
+# 5. Analytical Findings
 
-Conversion Rate
+## 5.1 Inventory Impact on Pricing
 
-Days of Supply
+Low-stock SKUs supported price increases without harming competitiveness.  
+Overstocked SKUs required margin sacrifice to improve inventory velocity.
 
-Margin Thresholds
+---
 
-Competitive Price Bands
+## 5.2 Demand Signal Effectiveness
 
-Inventory Risk Indicators
+Conversion rate effectively differentiated pricing power across SKUs.  
+High-demand products tolerated moderate price increases.
 
-📈 Analytical Insights
+---
 
-Inventory position strongly influences pricing flexibility
+## 5.3 Competitive Pressure Analysis
 
-High-demand SKUs tolerate controlled price increases
+High competitor density constrained upward pricing flexibility.  
+Low competition SKUs allowed improved margin capture.
 
-High competition restricts upward pricing movement
+---
 
-Margin integrity is preserved across the catalog
+## 5.4 Margin Discipline Evaluation
 
-💼 Business Impact
+No SKU was recommended below minimum viable pricing threshold.  
+Profit integrity was preserved across the catalog.
 
-The framework enables:
+---
 
-Standardized pricing governance
+# 6. Business Impact Simulation
 
-Reduced reactive pricing decisions
+Using historical sales volumes, the framework supports:
 
-Improved margin discipline
+- Improved margin capture in strong-demand SKUs  
+- Reduced capital lock-in in overstocked items  
+- Controlled competitive price drift  
+- Standardized pricing governance  
 
-Better capital allocation
+The model enables consistent, repeatable pricing decisions instead of manual adjustments.
 
-Controlled competitive positioning
+---
 
-📂 Repository Structure
-ecommerce-pricing-optimization-framework/
-│
-├── data/        → Raw datasets used for analysis
-├── analysis/    → Excel pricing model
-├── report/      → Full case study PDF
-└── README.md
+# 7. Strategic Insights
 
-📄 Full Report
+- Pricing must integrate operational signals, not just cost  
+- Inventory risk and demand elasticity are interconnected  
+- Competitive benchmarking must be guided, not blindly followed  
+- Structured pricing improves scalability in growing catalogs  
 
-The complete case study report is available in:
+---
 
-/report/Ecommerce_Pricing_Optimization_Case_Study.pdf
+# 8. Limitations & Future Enhancements
 
-🛠 Tools & Techniques
+Future improvements may include:
 
-Microsoft Excel (Power Query, Pivot Tables, Rule-Based Logic)
+- Demand elasticity modeling  
+- Predictive demand forecasting  
+- Weighted multi-factor scoring models  
+- Dynamic ad-performance integration  
+- Scenario simulation dashboards  
 
-Margin Sensitivity Modeling
+---
 
-Competitive Benchmarking
+# 9. Conclusion
 
-Structured Pricing Governance Framework
+This project demonstrates the development of a multi-signal pricing optimization framework combining financial discipline with operational intelligence.
 
-🚀 Future Enhancements
+The model is:
 
-Potential improvements include:
+- Scalable  
+- Transparent  
+- Data-driven  
+- Business-aligned  
 
-Demand elasticity modeling
+It provides a structured foundation for evolving toward more advanced predictive pricing systems.
 
-Predictive demand forecasting
+---
 
-Weighted scoring engine
 
-Python-based automation
 
-Interactive dashboard implementation
-
-📌 Project Type
-
-Independent Data Analytics Case Study
-Portfolio Project – 2026
